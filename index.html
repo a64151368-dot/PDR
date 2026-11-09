@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Правда чи міф: ПДР у селі</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#17191C;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;display:flex;font-family:Manrope,Arial,sans-serif;color:#17191C}
+.side{width:480px;height:900px;box-sizing:border-box;padding:44px 40px;display:flex;flex-direction:column;justify-content:space-between}
+.head{display:flex;flex-direction:column;gap:18px}
+.kicker{font-size:22px;font-weight:800}
+h1{margin:0;font-family:Unbounded,Arial,sans-serif;font-weight:800;font-size:58px;line-height:1.08}
+.theme{font-size:32px;font-weight:800;line-height:1.2}
+.bottom{display:flex;flex-direction:column;gap:20px}
+.task{font-size:27px;font-weight:800;line-height:1.25}
+.nav{display:flex;justify-content:space-between;gap:12px;min-height:56px}
+.nav button{min-height:56px;padding:0 24px;border:0;border-radius:12px;font:800 22px Manrope,Arial,sans-serif;cursor:pointer}
+.nav button[hidden]{display:block;visibility:hidden}
+.grid{width:1120px;height:900px;box-sizing:border-box;padding:44px;background:#2A2D31;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:24px}
+.card{box-sizing:border-box;min-height:0;border-radius:18px;padding:24px 30px;display:flex;flex-direction:column;justify-content:space-between}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.num{font-family:Unbounded,Arial,sans-serif;font-weight:800;font-size:44px}
+.show{min-height:56px;padding:0 24px;border:0;border-radius:12px;background:#17191C;color:#fff;font:800 22px Manrope,Arial,sans-serif;cursor:pointer}
+.text{margin:0;font-size:30px;font-weight:700;line-height:1.22}
+.slot{height:124px}
+.answer{box-sizing:border-box;height:124px;background:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.line{display:flex;align-items:center;gap:12px}
+.badge{font-family:Unbounded,Arial,sans-serif;font-size:20px;font-weight:800;padding:4px 12px;border-radius:8px;color:#fff}
+.ref{font-size:18px;font-weight:800;color:#4A4F55}
+.why{font-size:21px;font-weight:700;line-height:1.24}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+var road='<path d="M0 214 H400 V260 H0 Z" fill="#2A2D31"/><path d="M12 238 H62 M102 238 H152 M192 238 H242 M282 238 H332 M372 238 H400" stroke="#fff" stroke-width="6"/>';
+var boards=[
+{bg:'#F6B81C',fg:'#17191C',navBg:'#17191C',navFg:'#fff',theme:'1. Пішки вздовж дороги',
+art:'<circle cx="330" cy="58" r="38" fill="#FFF3C4"/><path d="M0 150 C90 118 170 170 400 126 V260 H0 Z" fill="#7A9A3A"/>'+road+'<path d="M0 206 H400 V214 H0 Z" fill="#C9A66B"/><rect x="62" y="112" width="12" height="62" fill="#5B3F22"/><circle cx="68" cy="94" r="42" fill="#3F6B2A"/><circle cx="222" cy="92" r="19" fill="#17191C"/><rect x="201" y="114" width="42" height="62" rx="16" fill="#17191C"/><rect x="201" y="136" width="42" height="11" fill="#fff"/><path d="M212 172 L196 208 M232 172 L250 208" stroke="#17191C" stroke-width="13" stroke-linecap="round"/>',
+cards:[
+['#FF9A76',0,'п. 4.1','Якщо узбіччя немає, краєм дороги треба йти в той самий бік, куди їдуть машини.','Без узбіччя йдемо краєм проїзної частини назустріч транспорту.'],
+['#7FD8BE',1,'п. 4.3','За межами села пішоходи на узбіччі повинні йти назустріч транспорту.','Так видно машини, які наближаються.'],
+['#8CC6FF',1,'п. 4.4','У темну пору доби пішоходу на узбіччі потрібні світлоповертальні елементи, і в селі теж.','Вимога діє на всіх дорогах, не лише в місті.'],
+['#C9B2FF',0,'ДСНС','Незнайомий предмет на узбіччі можна обережно відсунути, щоб він не заважав руху.','Не підходь, не чіпай, відійди назад тим самим шляхом, телефонуй 101.']]},
+{bg:'#1B57B0',fg:'#fff',navBg:'#fff',navFg:'#17191C',theme:'2. Велосипед і скутер',
+art:'<path d="M0 150 C100 120 220 166 400 130 V260 H0 Z" fill="#7FB2E8"/>'+road+'<circle cx="112" cy="166" r="48" fill="none" stroke="#fff" stroke-width="10"/><circle cx="290" cy="166" r="48" fill="none" stroke="#fff" stroke-width="10"/><path d="M112 166 L170 92 H258 L290 166 M170 92 L198 166 H112 M198 166 L258 92" fill="none" stroke="#F6B81C" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/><path d="M170 92 L160 70 M142 68 H182 M258 92 L250 58 H286" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="302" cy="72" r="13" fill="#FFF3C4"/>',
+cards:[
+['#FFD24D',1,'п. 6.1','Рухатися дорогою на велосипеді дозволено з 14 років.','Дорогою можна рухатися лише від 14 років.'],
+['#FFB3D1',0,'п. 6.6 д','Друга чи подругу можна везти на багажнику велосипеда, якщо їхати повільно.','Виняток: дитина до 7 років на додатковому сидінні з підніжками.'],
+['#7FD8BE',1,'пп. 6.2, 6.6 а','У темну пору доби на велосипеді мають бути увімкнений ліхтар і світлоповертачі.','Без ліхтаря і світлоповертачів їхати затемна заборонено.'],
+['#FF9A76',0,'п. 2.13','Скутер до 50 см³ можна водити з 14 років і без посвідчення водія.','Потрібні 16 років і посвідчення категорії A1.']]},
+{bg:'#1F6B43',fg:'#fff',navBg:'#fff',navFg:'#17191C',theme:'3. Худоба, віз, вантажівка',
+art:'<circle cx="340" cy="52" r="34" fill="#F6B81C"/><path d="M0 136 C110 104 230 158 400 118 V260 H0 Z" fill="#7DBA84"/>'+road+'<rect x="96" y="96" width="190" height="84" rx="26" fill="#fff"/><path d="M128 96 C160 92 174 116 158 136 C142 152 118 140 112 120 Z" fill="#17191C"/><path d="M218 128 C244 120 268 138 262 168 C240 182 206 164 218 128 Z" fill="#17191C"/><path d="M124 174 V214 M160 174 V214 M232 174 V214 M268 174 V214" stroke="#fff" stroke-width="18" stroke-linecap="round"/><rect x="276" y="76" width="74" height="62" rx="20" fill="#fff"/><path d="M290 78 L276 58 M336 78 L350 58" stroke="#F6B81C" stroke-width="9" stroke-linecap="round"/><circle cx="298" cy="104" r="6" fill="#17191C"/><circle cx="330" cy="104" r="6" fill="#17191C"/><rect x="292" y="118" width="46" height="18" rx="9" fill="#E9B7A8"/><path d="M96 118 C72 128 72 158 82 172" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>',
+cards:[
+['#8CC6FF',0,'п. 7.1','Переганяти худобу дорогою можна з 12 років, якщо корів небагато.','Переганяти тварин можна не молодше 14 років.'],
+['#FFD24D',1,'пп. 7.6, 7.7 ґ','Переганяти стадо дорогою дозволено лише у світлу пору доби.','У темряві та за поганої видимості переганяти заборонено.'],
+['#C9B2FF',0,'п. 21.11 в','П’ятнадцятирічний підліток може їхати в кузові вантажівки, якщо міцно тримається за борт.','Дітей до 16 років у кузові вантажівки перевозити заборонено.'],
+['#FFB3D1',1,'п. 7.3','Уночі на возі потрібні ліхтарі: спереду білий, ззаду червоний.','Ліхтарі встановлюють з лівого боку воза.']]}
+];
+var current=0,stage=document.getElementById('stage');
+function render(){
+  var b=boards[current],html='<div class="side" style="background:'+b.bg+';color:'+b.fg+'"><div class="head"><div class="kicker">ПДР у селі · 9 клас</div><h1>Правда<br>чи міф?</h1><div class="theme">'+b.theme+'</div></div><svg width="400" height="260" viewBox="0 0 400 260" aria-hidden="true">'+b.art+'</svg><div class="bottom"><div class="task">Напиши в чат номер і слово: правда або міф</div><div class="nav"><button id="prev" style="background:'+b.navBg+';color:'+b.navFg+'"'+(current==0?' hidden':'')+'>← Назад</button><button id="next" style="background:'+b.navBg+';color:'+b.navFg+'"'+(current==2?' hidden':'')+'>Далі →</button></div></div></div><div class="grid">';
+  b.cards.forEach(function(c,i){
+    html+='<div class="card" style="background:'+c[0]+'"><div><div class="top"><div class="num">'+(i+1)+'</div><button class="show" aria-expanded="false">Відповідь</button></div><p class="text">'+c[3]+'</p></div><div class="slot"><div class="answer" hidden style="display:none"><div class="line"><span class="badge" style="background:'+(c[1]?'#1B57B0':'#B3261E')+'">'+(c[1]?'ПРАВДА':'МІФ')+'</span><span class="ref">'+c[2]+'</span></div><div class="why">'+c[4]+'</div></div></div></div>';
+  });
+  stage.innerHTML=html+'</div>';
+  stage.querySelectorAll('.show').forEach(function(btn){
+    btn.onclick=function(){
+      var a=btn.closest('.card').querySelector('.answer'),open=a.style.display=='none';
+      a.style.display=open?'flex':'none';
+      btn.textContent=open?'Сховати':'Відповідь';
+      btn.setAttribute('aria-expanded',open);
+    };
+  });
+  document.getElementById('prev').onclick=function(){if(current>0){current--;render();}};
+  document.getElementById('next').onclick=function(){if(current<2){current++;render();}};
+}
+function fit(){
+  var s=Math.min(innerWidth/1600,innerHeight/900);
+  stage.style.transform='translate('+(innerWidth-1600*s)/2+'px,'+(innerHeight-900*s)/2+'px) scale('+s+')';
+}
+addEventListener('resize',fit);render();fit();
+</script>
+</body>
+</html>
